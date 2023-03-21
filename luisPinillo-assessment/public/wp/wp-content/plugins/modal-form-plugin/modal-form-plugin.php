@@ -35,15 +35,39 @@ function modal_form_shortcode(){
     return $form;
 }
 
-//to-do callback function to submit the form data to the newsletter table
+//callback function to submit the form data to the newsletter table
+
 function modal_form_callback(){
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'newsletter';
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $wpdb->insert($table_name, array('name' => $name, 'email' => $email));
-    wp_die();
-}
+  //get the form data
+  $name = $_POST['nl-name'];
+  $email = $_POST['nl-email'];
+  //connect to the database
+  global $wpdb;
+  //create the table if it doesn't exist
+  $table_name = $wpdb->prefix . 'newsletter';
+  $charset_collate = $wpdb->get_charset_collate();
+  $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+      id mediumint(9) NOT NULL AUTO_INCREMENT,
+      name tinytext NOT NULL,
+      email varchar(50) DEFAULT '' NOT NULL,
+      UNIQUE KEY id (id)
+  ) $charset_collate;";
+  require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+  dbDelta($sql);
+  //insert the data into the database
+  $wpdb->insert(
+      $table_name,
+      array(
+          'name' => $name,
+          'email' => $email
+      )
+  );
+  //return the success message
+  echo 'success';
+  //stop the script
+  wp_die();
+} 
+
 
 // Add the modal form to the footer of the site
 add_action('wp_footer', 'modal_form');
@@ -55,5 +79,5 @@ function modal_form(){
 }
 
 // Submit the form data to the newsletter table if exists in the database
-add_action('wp_ajax_nopriv_modal_form_submit', 'modal_form_callback');
-add_action('wp_ajax_modal_form_submit', 'modal_form_callback');
+add_action('wp_ajax_nopriv_modal_form_callback', 'modal_form_callback');
+add_action('wp_ajax_modal_form_callback', 'modal_form_callback');
