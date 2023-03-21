@@ -39,8 +39,8 @@ function modal_form_shortcode(){
 
 function modal_form_callback(){
   //get the form data
-  $name = $_POST['nl-name'];
-  $email = $_POST['nl-email'];
+  $name = sanitize_text_field($_POST['nl-name']);
+  $email = sanitize_email($_POST['nl-email']);
   //connect to the database
   global $wpdb;
   //create the table if it doesn't exist
