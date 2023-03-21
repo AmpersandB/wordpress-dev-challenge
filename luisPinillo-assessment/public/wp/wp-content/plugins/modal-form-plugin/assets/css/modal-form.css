@@ -1,0 +1,56 @@
+/*make the form modal*/
+.modal-form {
+  display: block;
+   position: fixed;
+   z-index: 1;
+   padding:25px;
+   left: 50vw;
+   top: 50vh;
+   min-width: 475px;
+   min-height: 307px;
+   background-color: #fff;
+   box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+   transform: translate(-50%, -50%);
+}
+
+.modal-form h2{
+ font-size: 28px;
+ text-transform: uppercase;
+ font-weight: 600;
+ padding-bottom: 0;
+ margin-bottom: 10px;
+}
+.modal-form form {
+ display: flex;
+ flex-direction: column;
+}
+.modal-form input {
+ border-radius: 10px;
+ border: solid 1px #929292;
+ min-height: 30px;
+ padding: 15px;
+ margin:10px 0;
+}
+.modal-form input[type="submit"] {
+ background-color: #eb494b;
+ color: #fff;
+ font-size: 18px;
+ text-transform: uppercase;
+ border: none;
+ padding: 20px;
+ cursor: pointer;
+}
+.modal-form input[type="submit"]:hover {
+ background-color: #cfcfcf;
+ color: #eb494b;
+}
+.modal-form hr {
+ width: 20px;
+ margin: 0;
+ border: solid 3px #eb494b;
+ margin-bottom: 15px;
+ }
+
+ .modal-form input.error {
+   border-color: #eb494b;
+ }
