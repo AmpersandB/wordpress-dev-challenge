@@ -1,6 +1,6 @@
 /*make the form modal*/
 .modal-form {
-  display: block;
+  display:none;
    position: fixed;
    z-index: 1;
    padding:25px;

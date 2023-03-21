@@ -1,5 +1,9 @@
 class formHandler {
+  //read cookie newsletter form submitted and show form if not submitted
+
+  //constructor
   constructor() {
+    this.readCookie();
       this.form = document.getElementById('modal_form');
       this.formFields = this.form.querySelectorAll('.required');
       this.events();
@@ -11,6 +15,40 @@ class formHandler {
       
   }
   //methods
+  //read cookie newsletter form submitted
+  readCookie() {
+    var name = "newsletter_form_submitted=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {   
+            this.closeModal();         
+            return c.substring(name.length, c.length);
+            
+        }else{
+            this.showModal();
+        }
+    }
+    return "";
+}
+//show modal form
+showModal() {
+    document.querySelector('.modal-form').style.display = 'block';
+}
+//close modal form
+closeModal() {
+    document.querySelector('.modal-form').style.display = 'none';
+}
+
+
+//form submit handler
+
+
+
   formSubmitHandler(e) {
       e.preventDefault();
       let fields = this.formFields;
@@ -45,7 +83,9 @@ class formHandler {
               }
           };
           xhr.send( formData);
-          
+          // set cookie for newsletter form submitted
+          document.cookie = "newsletter_form_submitted=true; expires="+ new Date(Date.now() + 86400000) + "; path=/" ;
+
           // Close modal
          document.querySelector('.modal-form').style.display = 'none';
       }
